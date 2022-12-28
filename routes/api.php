@@ -18,11 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/deliveries', 'DeliveryController@index');
-Route::post('/deliveries', 'DeliveryController@store');
-Route::get('/deliveries/{delivery}', 'DeliveryController@show');
-Route::put('/deliveries/{delivery}', 'DeliveryController@update');
-Route::delete('/deliveries/{delivery}', 'DeliveryController@destroy');
+Route::get('/deliveries', 'CourierDeliveryController@index');
+Route::post('/deliveries', 'CourierDeliveryController@store');
+Route::get('/deliveries/{delivery}', 'CourierDeliveryController@show');
+Route::put('/deliveries/{delivery}', 'CourierDeliveryController@update');
+Route::delete('/deliveries/{delivery}', 'CourierDeliveryController@destroy');
 
 Route::get('/orders', 'OrderController@index');
 Route::post('/orders', 'OrderController@store');
