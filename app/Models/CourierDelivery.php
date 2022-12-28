@@ -13,7 +13,7 @@ class CourierDelivery extends Model
         'origin', 'destination', 'type', 'cost', 'status'
     ];
 
-    public function calculateCost()
+    public function calculateCost($origin, $destination, $type)
     {
         // реализация расчета стоимости доставки
     }
