@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Delivery;
+use App\Models\CourierDelivery;
 
 use Illuminate\Http\Request;
 
@@ -14,7 +14,7 @@ class CourierDeliveryController extends Controller
         $destination = $request->input('destination');
         $type = $request->input('type');
 
-        $cost = Delivery::calculateCost($origin, $destination, $type);
+        $cost = CourierDelivery::calculateCost($origin, $destination, $type);
 
         return response()->json([
             'cost' => $cost
