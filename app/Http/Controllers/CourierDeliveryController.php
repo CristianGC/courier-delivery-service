@@ -10,7 +10,7 @@ class CourierDeliveryController extends Controller
 {
     public function index()
     {
-        $deliveries = Delivery::all();
+        $deliveries = CourierDelivery::all();
 
         return response()->json([
             'deliveries' => $deliveries,
@@ -19,21 +19,21 @@ class CourierDeliveryController extends Controller
 
     public function store(Request $request)
     {
-        $delivery = Delivery::create($request->all());
+        $delivery = CourierDelivery::create($request->all());
 
         return response()->json([
             'delivery' => $delivery,
         ]);
     }
 
-    public function show(Delivery $delivery)
+    public function show(CourierDelivery $delivery)
     {
         return response()->json([
             'delivery' => $delivery,
         ]);
     }
 
-    public function update(Request $request, Delivery $delivery)
+    public function update(Request $request, CourierDelivery $delivery)
     {
         $delivery->update($request->all());
 
@@ -42,7 +42,7 @@ class CourierDeliveryController extends Controller
         ]);
     }
 
-    public function destroy(Delivery $delivery)
+    public function destroy(CourierDelivery $delivery)
     {
         $delivery->delete();
 
