@@ -19,11 +19,18 @@ class CourierDeliveryController extends Controller
 
     public function store(Request $request)
     {
+
+
+        return $request->all();
+        /*
         $delivery = CourierDelivery::create($request->all());
+
 
         return response()->json([
             'delivery' => $delivery,
         ]);
+        */
+
     }
 
     public function show(CourierDelivery $delivery)
