@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class DeliveryController extends Controller
 {
     //
 
     public function index()
     {
-        return response()->json([
-            'deliveries' => "44",
-        ]);
+        return "<h1>index <h1>";
     }
 }
