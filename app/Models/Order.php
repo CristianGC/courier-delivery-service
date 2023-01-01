@@ -44,14 +44,4 @@ class Order extends Model
 
         return $order;
     }
-
-    public static function getOrder($id)
-    {
-        return Order::with('delivery')->find($id);
-    }
-
-    public static function getOrders()
-    {
-        return Order::with('delivery')->get();
-    }
 }
