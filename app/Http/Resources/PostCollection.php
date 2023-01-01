@@ -14,6 +14,11 @@ class PostCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'data' => $this->collection,
+            'version' => '0.0.1',
+            'author' => 'Ghinea Cristian',
+            'count_posts' => $this->count(),
+        ];
     }
 }

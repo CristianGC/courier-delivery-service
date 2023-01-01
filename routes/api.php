@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('posts', PostController::class);
+
+Route::resource('/authors', AuthorController::class)->only([
+   'index', 'show'
+]);
 
 /*
 Route::get('posts', 'PostController@index');
