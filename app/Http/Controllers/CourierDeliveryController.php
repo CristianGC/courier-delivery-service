@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\CourierDelivery;
 
+use App\Models\CourierDelivery;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
