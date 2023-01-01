@@ -29,14 +29,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $post = Post::create($request->only(
-            [
-                'title',
-                'description'
-            ]
-        ));
-
-        return new PostResource($post);
+        //
     }
 
     /**
