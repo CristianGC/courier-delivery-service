@@ -24,11 +24,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('posts', PostController::class);
 Route::apiResource('orders', OrderController::class);
 
-/*
-Route::resource('/authors', AuthorController::class)->only([
-   'index', 'show'
+
+Route::resource('/orders', OrderController::class)->only([
+   'index',
+    'store',
+    'show',
 ]);
-*/
+
 /*
 Route::get('posts', 'PostController@index');
 Route::post('posts', 'PostController@store');

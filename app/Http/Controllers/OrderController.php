@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderCollection;
+use App\Http\Resources\PostResource;
+use App\Models\Order;
+use App\Models\Post;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,7 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(new OrderCollection(Order::all()), Response::HTTP_OK);
     }
 
     /**
@@ -24,7 +29,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = Post::create($request->only(
+            [
+                'title',
+                'description'
+            ]
+        ));
+
+        return new PostResource($post);
     }
 
     /**
