@@ -9,7 +9,9 @@ class Delivery extends Model
 {
     use HasFactory;
 
+    protected $unique= ['origin', 'destination'];
+
     protected $fillable = [
-        'origin', 'destination', 'type', 'cost', 'status'
+        'type', 'cost', 'status'
     ];
 }
