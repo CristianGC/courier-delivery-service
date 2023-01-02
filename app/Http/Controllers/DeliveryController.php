@@ -72,11 +72,27 @@ class DeliveryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return DeliveryResource
      */
     public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'origin' => 'required|max:255',
+            'destination' => 'required|max:255',
+            'type' => 'required|max:255',
+            'cost' => 'required|numeric',
+        ]);
+
+        $delivery = Delivery::find($id);
+
+        if ($delivery) {
+            $delivery->update($validatedData);
+            return new DeliveryResource($delivery);
+        } else {
+            return response()->json([
+                'error' => 'Delivery not found'
+            ], 404);
+        }
     }
 
     /**
