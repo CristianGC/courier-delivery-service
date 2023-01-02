@@ -19,6 +19,7 @@ class CreateDeliveriesTable extends Migration
             $table->string('destination');
             $table->string('type');
             $table->float('cost');
+            $table->unique(['origin', 'destination']);  // Add composite unique index
             $table->timestamps();
         });
     }
