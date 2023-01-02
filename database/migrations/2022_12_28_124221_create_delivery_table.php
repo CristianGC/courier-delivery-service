@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourierDeliveryTable extends Migration
+class CreateDeliveryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCourierDeliveryTable extends Migration
      */
     public function up()
     {
-        Schema::create('courier_delivery', function (Blueprint $table) {
+        Schema::create('delivery', function (Blueprint $table) {
             $table->id();
             $table->string('origin');
             $table->string('destination');
@@ -30,6 +30,6 @@ class CreateCourierDeliveryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('courier_delivery');
+        Schema::dropIfExists('delivery');
     }
 }

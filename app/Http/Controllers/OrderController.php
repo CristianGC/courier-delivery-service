@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderCollection;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\PostResource;
 use App\Models\Order;
 use App\Models\Post;
@@ -29,7 +30,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        //$courierDeliveryID, $origin, $destination, $type, $deliveryDate, $name, $phone, $email
+
+        dump($request);
+
+        //$oreder = Order::createOrder();
+
+        //return new OrderResource($oreder);
     }
 
     /**

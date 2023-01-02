@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CourierDelivery;
+use App\Models\Delivery;
 use Illuminate\Http\Request;
 
 class DeliveryController extends Controller
 {
     public function index()
     {
-        $deliveries = CourierDelivery::all();
+        $deliveries = Delivery::all();
 
         return response()->json([
             'deliveries' => $deliveries,
@@ -19,7 +19,7 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
 
-        $delivery = CourierDelivery::create($request->all());
+        $delivery = Delivery::create($request->all());
 
         return response()->json([
             'delivery' => $delivery,
@@ -27,14 +27,14 @@ class DeliveryController extends Controller
 
     }
 
-    public function show(CourierDelivery $delivery)
+    public function show(Delivery $delivery)
     {
         return response()->json([
             'delivery' => $delivery,
         ]);
     }
 
-    public function update(Request $request, CourierDelivery $delivery)
+    public function update(Request $request, Delivery $delivery)
     {
         $delivery->update($request->all());
 
@@ -43,7 +43,7 @@ class DeliveryController extends Controller
         ]);
     }
 
-    public function destroy(CourierDelivery $delivery)
+    public function destroy(Delivery $delivery)
     {
         $delivery->delete();
 

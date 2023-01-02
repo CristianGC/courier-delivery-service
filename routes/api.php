@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
+use App\Models\Delivery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +24,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('posts', PostController::class);
-Route::apiResource('orders', OrderController::class);
 
+//Route::apiResource('orders', OrderController::class);
+Route::apiResource('delivery', DeliveryController::class);
 
 Route::resource('/orders', OrderController::class)->only([
    'index',

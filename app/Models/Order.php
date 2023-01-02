@@ -15,7 +15,7 @@ class Order extends Model
 
     public function delivery()
     {
-        return $this->belongsTo(CourierDelivery::class);
+        return $this->belongsTo(Delivery::class);
     }
 
     public function getCost()
@@ -23,20 +23,11 @@ class Order extends Model
         return $this->delivery->cost;
     }
 
-    public static function createOrder($origin, $destination, $type, $delivery_date, $name, $phone, $email)
+    public static function createOrder($courierDeliveryID, $origin, $destination, $type, $deliveryDate, $name, $phone, $email)
     {
-        $delivery = CourierDelivery::create([
-            'origin' => $origin,
-            'destination' => $destination,
-            'type' => $type
-        ]);
-
-        $delivery->calculateCost();
-        $delivery->save();
-
         $order = Order::create([
-            'delivery_id' => $delivery->id,
-            'delivery_date' => $delivery_date,
+            'delivery_id' => $courierDeliveryID,
+            'delivery_date' => $deliveryDate,
             'name' => $name,
             'phone' => $phone,
             'email' => $email
