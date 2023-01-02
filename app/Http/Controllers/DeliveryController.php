@@ -2,59 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DeliveryCollection;
 use App\Models\Delivery;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class DeliveryController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $deliveries = Delivery::all();
-
-        return response()->json([
-            'deliveries' => $deliveries,
-        ]);
+        return response()->json(new DeliveryCollection(Delivery::all()), Response::HTTP_OK);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        try {
-            $delivery = Delivery::create($request);
-
-            return response()->json([
-                'delivery' => $delivery,
-            ]);
-
-        } catch (QueryException $e) {
-            if ($e->errorInfo[1] == 1062) {
-                return response()->json([
-                    'message' => 'Duplicate value for origin or destination',
-                ], 422);
-            }
-        }
+        //
     }
 
-    public function show(Delivery $delivery)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        return response()->json([
-            'delivery' => $delivery,
-        ]);
+        //
     }
 
-    public function update(Request $request, Delivery $delivery)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        $delivery->update($request->all());
-
-        return response()->json([
-            'delivery' => $delivery,
-        ]);
+        //
     }
 
-    public function destroy(Delivery $delivery)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $delivery->delete();
-
-        return response()->json(null, 204);
+        //
     }
 }

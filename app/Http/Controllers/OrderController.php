@@ -7,8 +7,8 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\PostResource;
 use App\Models\Order;
 use App\Models\Post;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {

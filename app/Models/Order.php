@@ -9,10 +9,15 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'delivery_id', 'delivery_date', 'name', 'phone', 'email'
+    protected array $fillable = [
+        'delivery_id',
+        'delivery_date',
+        'name',
+        'phone',
+        'email'
     ];
 
+/*
     public function delivery()
     {
         return $this->belongsTo(Delivery::class);
@@ -35,4 +40,5 @@ class Order extends Model
 
         return $order;
     }
+*/
 }

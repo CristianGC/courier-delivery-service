@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\DeliveryController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PostController;
-use App\Models\Delivery;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DeliveryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('posts', PostController::class);
-
-//Route::apiResource('orders', OrderController::class);
 Route::apiResource('delivery', DeliveryController::class);
 
 Route::resource('/orders', OrderController::class)->only([
@@ -33,11 +29,3 @@ Route::resource('/orders', OrderController::class)->only([
     'store',
     'show',
 ]);
-
-/*
-Route::get('posts', 'PostController@index');
-Route::post('posts', 'PostController@store');
-Route::get('posts/{post}', 'PostController@show');
-Route::put('posts/{post}', 'PostController@update');
-Route::delete('posts/{post}', 'PostController@destroy');
-*/
