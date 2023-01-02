@@ -30,12 +30,14 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         try {
-            $delivery = Delivery::create($request->only([
-                'origin',
-                'destination',
-                'type',
-                'cost'
-            ]));
+            $validatedData = $request->validate([
+                'origin' => 'required|max:255',
+                'destination' => 'required|max:255',
+                'type' => 'required|max:255',
+                'cost' => 'required|numeric',
+            ]);
+
+            $delivery = Delivery::create($validatedData);
 
             return new DeliveryResource($delivery);
 
