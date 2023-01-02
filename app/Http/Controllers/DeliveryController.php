@@ -27,6 +27,16 @@ class DeliveryController extends Controller
      */
     public function store(Request $request)
     {
+
+        /*
+         * 'origin',
+         * 'destination',
+         * 'type',
+         * 'cost'
+         */
+
+
+
         //
     }
 
