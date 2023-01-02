@@ -18,7 +18,15 @@ class DeliveryController extends Controller
      */
     public function index()
     {
-        return response()->json(new DeliveryCollection(Delivery::all()), Response::HTTP_OK);
+        $deliverys = new DeliveryCollection(Delivery::all());
+
+        if ($deliverys->count()) {
+            return response()->json($deliverys, Response::HTTP_OK);
+        } else {
+            return response()->json([
+                'message' => 'Delivery not exist',
+            ], 422);
+        }
     }
 
     /**
@@ -38,7 +46,6 @@ class DeliveryController extends Controller
             ]);
 
             $delivery = Delivery::create($validatedData);
-
             return new DeliveryResource($delivery);
 
         } catch (QueryException $e) {
