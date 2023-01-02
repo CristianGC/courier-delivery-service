@@ -99,10 +99,21 @@ class DeliveryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return DeliveryResource
      */
     public function destroy($id)
     {
-        //
+        $delivery = Delivery::find($id);
+
+        if ($delivery) {
+            $delivery->delete($delivery);
+            return response()->json([
+                'message' => 'Delivery deleted successfully',
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Delivery not found'
+            ], 404);
+        }
     }
 }
