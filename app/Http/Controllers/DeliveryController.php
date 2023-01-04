@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Resources\DeliveryCollection;
 use App\Http\Resources\DeliveryResource;
 use App\Models\Delivery;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Nette\Schema\ValidationException;
+use Illuminate\Validation\ValidationException;
 
 class DeliveryController extends Controller
 {
@@ -37,21 +36,10 @@ class DeliveryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return DeliveryResource
      */
-    public function store(Request $request)
-    {
-        // Нужно перевести в отдельную функцию
-        try {
-            $validatedData = $request->validate([
-                'origin' => 'required|max:255',
-                'destination' => 'required|max:255',
-                'type' => 'required|max:255',
-                'cost' => 'required|numeric',
-            ]);
-        } catch (RequestException $requestException) {
-            return response()->json([
-                'message' => 'validatedData',
-            ], 404);
-        }
+    public function store(Request $request) {
+
+        $validatedData = null;
+        $this->validatedData($request, $validatedData);
 
         try {
             $delivery = Delivery::create($validatedData);
@@ -94,19 +82,8 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Нужно перевести в отдельную функцию
-        try {
-            $validatedData = $request->validate([
-                'origin' => 'required|max:255',
-                'destination' => 'required|max:255',
-                'type' => 'required|max:255',
-                'cost' => 'required|numeric',
-            ]);
-        } catch (ValidationException $validationException) {
-            return response()->json([
-                'message' => 'validatedData',
-            ], 404);
-        }
+        $validatedData = null;
+        $this->validatedData($request, $validatedData);
 
         $delivery = Delivery::find($id);
 
@@ -142,7 +119,19 @@ class DeliveryController extends Controller
         }
     }
 
-    private function validatedData(Request$request) {
-
+    private function validatedData(Request $request, Validated &$validatedData) {
+        try {
+            $validatedData = $request->validate([
+                'origin' => 'required|max:255',
+                'destination' => 'required|max:255',
+                'type' => 'required|max:255',
+                'cost' => 'required|numeric',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        }
     }
 }
