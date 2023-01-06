@@ -17,8 +17,7 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $deliverys = new DeliveryCollection(Delivery::all());
 
         if ($deliverys->count()) {
@@ -36,10 +35,9 @@ class DeliveryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return DeliveryResource
      */
-    public function store(Request $request) {
-
-        $validatedData = null;
-        $this->validatedData($request, $validatedData);
+    public function store(Request $request)
+    {
+        $validatedData = $this->validatedData($request);
 
         try {
             $delivery = Delivery::create($validatedData);
@@ -82,8 +80,7 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = null;
-        $this->validatedData($request, $validatedData);
+        $validatedData = $this->validatedData($request);
 
         $delivery = Delivery::find($id);
 
@@ -119,9 +116,10 @@ class DeliveryController extends Controller
         }
     }
 
-    private function validatedData(Request $request, Validated &$validatedData) {
+    private function validatedData(Request $request)
+    {
         try {
-            $validatedData = $request->validate([
+            return $validatedData = $request->validate([
                 'origin' => 'required|max:255',
                 'destination' => 'required|max:255',
                 'type' => 'required|max:255',
