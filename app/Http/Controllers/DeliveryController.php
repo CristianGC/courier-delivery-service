@@ -17,7 +17,8 @@ class DeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $deliverys = new DeliveryCollection(Delivery::all());
 
         if ($deliverys->count()) {

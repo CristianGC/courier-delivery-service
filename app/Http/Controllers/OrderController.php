@@ -30,31 +30,40 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         try {
-            $validatedData = $request->validate([
-                'delivery_id' => 'required|integer',
-                'delivery_date' => 'required|date',
-                'name' => 'required|string|max:255',
-                'phone' => 'required|string|max:255',
-                'email' => 'required|email|max:255',],
-                ['delivery_id.required' => 'Delivery ID is required',
-                 'delivery_id.integer' => 'Delivery ID must be an integer',
-                 'delivery_date.required' => 'Delivery date is required',
-                 'delivery_date.date' => 'Delivery date must be a valid date',
-                 'name.required' => 'Name is required',
-                 'name.string' => 'Name must be a string',
-                 'name.max' => 'Name must be no longer than 255 characters',
-                 'phone.required' => 'Phone is required',
-                 'phone.string' => 'Phone must be a string',
-                 'phone.max' => 'Phone must be no longer than 255 characters',
-                 'email.required' => 'Email is required',
-                 'email.email' => 'Email must be a valid email address',
-                 'email.max' => 'Email must be no longer than 255 characters',
-                ]);
+            $validatedData = $request->validate(
+                [
+                    'delivery_id' => 'required|integer',
+                    'delivery_date' => 'required|date',
+                    'name' => 'required|string|max:255',
+                    'phone' => 'required|string|max:255',
+                    'email' => 'required|email|max:255',
+                ],
+                [
+                    'delivery_id.required' => 'Delivery ID is required',
+                    'delivery_id.integer' => 'Delivery ID must be an integer',
+                    'delivery_date' => ['required', 'date', 'after_or_equal', 'message' => 'The delivery date must be a valid date and must be equal to or after the current date.'],
+                    'name.required' => 'Name is required',
+                    'name.string' => 'Name must be a string',
+                    'name.max' => 'Name must be no longer than 255 characters',
+                    'phone.required' => 'Phone is required',
+                    'phone.string' => 'Phone must be a string',
+                    'phone.max' => 'Phone must be no longer than 255 characters',
+                    'email.required' => 'Email is required',
+                    'email.email' => 'Email must be a valid email address',
+                    'email.max' => 'Email must be no longer than 255 characters',
+                ]
+        );
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'The given data was invalid.',
                 'errors' => $e->errors(),
             ], 422);
+        }
+
+        $deliveryDate = $request->input("delivery_date");
+
+        if ($request->isMethod("post")) {
+
         }
 
         $order = Order::create($validatedData);
