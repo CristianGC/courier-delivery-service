@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Nette\Schema\ValidationException;
@@ -41,7 +42,10 @@ class OrderController extends Controller
                 [
                     'delivery_id.required' => 'Delivery ID is required',
                     'delivery_id.integer' => 'Delivery ID must be an integer',
-                    'delivery_date' => ['required', 'date', 'after_or_equal', 'message' => 'The delivery date must be a valid date and must be equal to or after the current date.'],
+                    'delivery_date.required' => 'Delivery date is required',
+                    'delivery_date.date' => 'Delivery date must be a valid date',
+                    'delivery_date' => 'required|date|after:now',
+                    'delivery_date.after' => 'The delivery date must be a future date.',
                     'name.required' => 'Name is required',
                     'name.string' => 'Name must be a string',
                     'name.max' => 'Name must be no longer than 255 characters',
@@ -51,23 +55,23 @@ class OrderController extends Controller
                     'email.required' => 'Email is required',
                     'email.email' => 'Email must be a valid email address',
                     'email.max' => 'Email must be no longer than 255 characters',
-                ]
-        );
+                ]);
         } catch (ValidationException $e) {
             return response()->json([
                 'message' => 'The given data was invalid.',
-                'errors' => $e->errors(),
+                'errors' => $e->getMessage(),
             ], 422);
         }
 
-        $deliveryDate = $request->input("delivery_date");
-
-        if ($request->isMethod("post")) {
-
+        try {
+            $order = Order::create($validatedData);
+            return new OrderResource($order);
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => $e->getMessage(),
+            ], 422);
         }
-
-        $order = Order::create($validatedData);
-        return new OrderResource($order);
     }
 
     /**
