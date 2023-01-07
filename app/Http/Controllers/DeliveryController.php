@@ -38,15 +38,25 @@ class DeliveryController extends Controller
     public function store(Request $request)
     {
         try {
-             $validatedData = $request->validate([
-                'origin' => 'required|max:255',
-                'destination' => 'required|max:255',
-                'type' => 'required|max:255',
-                'cost' => 'required|numeric',
+            $validatedData = $request->validate([
+                'origin' => 'required|unique:deliveries|max:255',
+                'destination' => 'required|unique:deliveries|max:255',
+                'type' => 'required',
+                'cost' => 'required|numeric'
+            ], [
+                'origin.required' => 'The origin field is required',
+                'origin.unique' => 'The origin field must be unique',
+                'destination.required' => 'The destination field is required',
+                'destination.unique' => 'The destination field must be unique',
+                'type.required' => 'The type field is required',
+                'cost.required' => 'The cost field is required',
+                'cost.numeric' => 'The cost field must be a number',
+                'origin.max' => 'Origin must be no longer than 255 characters',
+                'destination.max' => 'Destination must be no longer than 255 characters'
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'message' => 'Validation failed',
+                'message' => 'The given data was invalid.',
                 'errors' => $e->errors(),
             ], 422);
         }
@@ -94,14 +104,24 @@ class DeliveryController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'origin' => 'required|max:255',
-                'destination' => 'required|max:255',
-                'type' => 'required|max:255',
-                'cost' => 'required|numeric',
+                'origin' => 'required|unique:deliveries|max:255',
+                'destination' => 'required|unique:deliveries|max:255',
+                'type' => 'required',
+                'cost' => 'required|numeric'
+            ], [
+                'origin.required' => 'The origin field is required',
+                'origin.unique' => 'The origin field must be unique',
+                'destination.required' => 'The destination field is required',
+                'destination.unique' => 'The destination field must be unique',
+                'type.required' => 'The type field is required',
+                'cost.required' => 'The cost field is required',
+                'cost.numeric' => 'The cost field must be a number',
+                'origin.max' => 'Origin must be no longer than 255 characters',
+                'destination.max' => 'Destination must be no longer than 255 characters'
             ]);
         } catch (ValidationException $e) {
             return response()->json([
-                'message' => 'Validation failed',
+                'message' => 'The given data was invalid.',
                 'errors' => $e->errors(),
             ], 422);
         }
