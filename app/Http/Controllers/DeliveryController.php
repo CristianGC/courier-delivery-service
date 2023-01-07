@@ -37,7 +37,19 @@ class DeliveryController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $this->validatedData($request);
+        try {
+             $validatedData = $request->validate([
+                'origin' => 'required|max:255',
+                'destination' => 'required|max:255',
+                'type' => 'required|max:255',
+                'cost' => 'required|numeric',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        }
 
         try {
             $delivery = Delivery::create($validatedData);
@@ -80,7 +92,19 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $this->validatedData($request);
+        try {
+            $validatedData = $request->validate([
+                'origin' => 'required|max:255',
+                'destination' => 'required|max:255',
+                'type' => 'required|max:255',
+                'cost' => 'required|numeric',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        }
 
         $delivery = Delivery::find($id);
 
@@ -113,23 +137,6 @@ class DeliveryController extends Controller
             return response()->json([
                 'error' => 'Delivery not found'
             ], 404);
-        }
-    }
-
-    private function validatedData(Request $request)
-    {
-        try {
-            return $validatedData = $request->validate([
-                'origin' => 'required|max:255',
-                'destination' => 'required|max:255',
-                'type' => 'required|max:255',
-                'cost' => 'required|numeric',
-            ]);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
         }
     }
 }
